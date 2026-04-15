@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Papers — Uncommons Collective</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="nav-mount"></div>
+
+  <main>
+    <header class="page-header">
+      <div class="wrap">
+        <p class="eyebrow">Publications · Working Papers · Archive</p>
+        <h1>Papers &amp;<br><em>Working Drafts.</em></h1>
+        <p class="lede">
+          Every paper produced by an Uncommons Research Cell. Sorted by
+          sprint. Filter by status, theme, or lead author. All papers are
+          released under CC BY-NC-SA 4.0 unless otherwise noted.
+        </p>
+      </div>
+    </header>
+
+    <!-- Filters + list -->
+    <section>
+      <div class="wrap">
+        <div class="section-label">Current &amp; Forthcoming</div>
+
+        <div class="paper-filters reveal">
+          <button class="filter-chip active" data-filter="all">All</button>
+          <button class="filter-chip" data-filter="active">In Progress</button>
+          <button class="filter-chip" data-filter="forthcoming">Forthcoming</button>
+          <button class="filter-chip" data-filter="draft">Draft</button>
+          <button class="filter-chip" data-filter="published">Published</button>
+          <button class="filter-chip" data-filter="proposed">Proposed</button>
+        </div>
+
+        <ul class="paper-list reveal">
+
+          <!-- P.01 -->
+          <li class="paper-entry" data-status="active">
+            <div class="paper-id">UNC·2026·01<br>Sprint 01</div>
+            <div class="paper-body">
+              <h3><a href="#">AI Sovereignty and the Compute Layer: Who Owns the Substrate of the Next Internet?</a></h3>
+              <p class="paper-authors">Kay Yu <span style="color:var(--ink-faint)">(lead)</span> · Fang Ting · Twone · Shirlene · Big Song</p>
+              <p class="paper-abstract">
+                The debate over "AI sovereignty" has focused on model access and training data. We argue this framing
+                misses the more durable political question: who owns the compute substrate on which foundation models
+                run? The paper maps the geopolitics of the GPU supply chain, sovereign-compute initiatives from Europe
+                to the Gulf, and asks what meaningful sovereignty means when the stack is global but the silicon is not.
+              </p>
+              <div class="paper-tags">
+                <span class="paper-tag">AI Policy</span>
+                <span class="paper-tag">Sovereignty</span>
+                <span class="paper-tag">Infrastructure</span>
+                <span class="paper-tag">Geopolitics</span>
+              </div>
+            </div>
+            <div class="paper-meta">
+              <span class="paper-status active">In Progress</span><br>
+              Wk 3 of 6<br>
+              Apr 2026<br>
+              ~8,400w
+            </div>
+          </li>
+
+          <!-- P.02 -->
+          <li class="paper-entry" data-status="forthcoming">
+            <div class="paper-id">UNC·2026·02<br>Sprint 02</div>
+            <div class="paper-body">
+              <h3><a href="#">Onchain Reputation as Institutional Primitive: Credentials, Capture, and the Return of the Commons</a></h3>
+              <p class="paper-authors">Shirlene <span style="color:var(--ink-faint)">(lead)</span> · Big Song · Kay Yu</p>
+              <p class="paper-abstract">
+                Reputation systems have migrated from eBay and Yelp onto public blockchains under the banner of
+                "decentralized identity." But the governance question — who gets to issue credentials, who gets to
+                revoke them, and who arbitrates disputes — has been treated as a technical problem. We argue it is
+                an institutional one, and trace three failure modes observable in early onchain reputation systems.
+              </p>
+              <div class="paper-tags">
+                <span class="paper-tag">Identity</span>
+                <span class="paper-tag">Reputation</span>
+                <span class="paper-tag">Governance</span>
+                <span class="paper-tag">Commons</span>
+              </div>
+            </div>
+            <div class="paper-meta">
+              <span class="paper-status forthcoming">Forthcoming</span><br>
+              Cell forming<br>
+              Jun 2026<br>
+              Sprint 02
+            </div>
+          </li>
+
+          <!-- P.03 -->
+          <li class="paper-entry" data-status="draft">
+            <div class="paper-id">UNC·2026·03<br>Working</div>
+            <div class="paper-body">
+              <h3><a href="#">Token Incentives as Governance Substitutes: Can Mechanism Design Replace Institutional Trust?</a></h3>
+              <p class="paper-authors">Twone <span style="color:var(--ink-faint)">(lead)</span> · Kay Yu · Fang Ting</p>
+              <p class="paper-abstract">
+                "Code is law" has been refuted often enough that the slogan now functions as a warning. This paper
+                examines four cases — Curve wars, Uniswap governance, Arbitrum's token launch, and the Nouns split —
+                where token-based mechanisms substituted for institutional trust, and asks under what conditions
+                mechanism design succeeds, fails, or produces unintended oligarchies.
+              </p>
+              <div class="paper-tags">
+                <span class="paper-tag">Governance</span>
+                <span class="paper-tag">Tokens</span>
+                <span class="paper-tag">DAO</span>
+                <span class="paper-tag">Case Studies</span>
+              </div>
+            </div>
+            <div class="paper-meta">
+              <span class="paper-status draft">Early Draft</span><br>
+              Framework stage<br>
+              Q3 2026<br>
+              Sprint 03
+            </div>
+          </li>
+
+          <!-- P.04 -->
+          <li class="paper-entry" data-status="forthcoming">
+            <div class="paper-id">UNC·2026·04<br>Working</div>
+            <div class="paper-body">
+              <h3><a href="#">MEV and Market Structure: Tax, Subsidy, or Both?</a></h3>
+              <p class="paper-authors">Big Song <span style="color:var(--ink-faint)">(lead)</span> · Twone · Shirlene</p>
+              <p class="paper-abstract">
+                Maximal Extractable Value is typically described as a "tax" on retail users, but empirical distribution
+                data complicates this story. Some MEV accrues to infrastructure providers; some is rebated via
+                order-flow auctions; some is captured by protocols. We propose a taxonomy — extractive, redistributive,
+                informational — and argue that MEV cannot be regulated without first being correctly classified.
+              </p>
+              <div class="paper-tags">
+                <span class="paper-tag">MEV</span>
+                <span class="paper-tag">Market Structure</span>
+                <span class="paper-tag">Empirical</span>
+              </div>
+            </div>
+            <div class="paper-meta">
+              <span class="paper-status forthcoming">Forthcoming</span><br>
+              Thesis ratified<br>
+              Q3 2026<br>
+              Sprint 04
+            </div>
+          </li>
+
+          <!-- P.05 -->
+          <li class="paper-entry" data-status="proposed">
+            <div class="paper-id">UNC·2026·05<br>Proposal</div>
+            <div class="paper-body">
+              <h3><a href="#">Autonomous Agents and Legal Personhood: Should an AI Model Have Standing in Court?</a></h3>
+              <p class="paper-authors">Fang Ting <span style="color:var(--ink-faint)">(lead)</span> · Shirlene · Kay Yu</p>
+              <p class="paper-abstract">
+                As autonomous agents sign transactions, enter into contracts, and allocate capital, the question of
+                their legal status moves from philosophy to practice. We survey the existing legal-personhood doctrines
+                — corporate, animal, riverine — and consider whether any extend cleanly to software agents operating
+                on public blockchains. The paper argues for a limited, revocable "operational personhood" model.
+              </p>
+              <div class="paper-tags">
+                <span class="paper-tag">Law</span>
+                <span class="paper-tag">AI Agents</span>
+                <span class="paper-tag">Personhood</span>
+                <span class="paper-tag">Regulation</span>
+              </div>
+            </div>
+            <div class="paper-meta">
+              <span class="paper-status draft" style="border-style: dashed;">Proposed</span><br>
+              Awaiting vote<br>
+              Q4 2026<br>
+              Sprint 05
+            </div>
+          </li>
+
+          <!-- P.06 -->
+          <li class="paper-entry" data-status="proposed">
+            <div class="paper-id">UNC·2026·06<br>Proposal</div>
+            <div class="paper-body">
+              <h3><a href="#">Public Goods Funding After the Retroactive Turn: Lessons from Optimism, Gitcoin, and Protocol Guild</a></h3>
+              <p class="paper-authors">Shirlene <span style="color:var(--ink-faint)">(lead)</span> · Fang Ting · Big Song</p>
+              <p class="paper-abstract">
+                Retroactive public-goods funding promised to solve the free-rider problem by paying for value after
+                it was created. Three years in, the evidence is mixed. We review the major experiments, quantify
+                the distribution of awards, and identify the mechanisms that actually change behavior versus those
+                that reproduce existing power structures under new branding.
+              </p>
+              <div class="paper-tags">
+                <span class="paper-tag">Public Goods</span>
+                <span class="paper-tag">Funding</span>
+                <span class="paper-tag">Quantitative</span>
+              </div>
+            </div>
+            <div class="paper-meta">
+              <span class="paper-status draft" style="border-style: dashed;">Proposed</span><br>
+              Awaiting vote<br>
+              Q4 2026<br>
+              Sprint 06
+            </div>
+          </li>
+
+        </ul>
+      </div>
+    </section>
+
+    <!-- Archive / legacy -->
+    <section id="archive">
+      <div class="wrap">
+        <div class="section-label">Pre-Collective Archive</div>
+        <div class="reveal">
+          <h2>Essays &amp; notes<br>before the <em>method.</em></h2>
+          <p style="max-width: 58ch; color: var(--ink-soft); margin-top: 0.6rem;">
+            Writing from the Uncommons community period (2023–2025), before the restructuring into a
+            networked research collective. Archived for continuity, not re-endorsed.
+          </p>
+        </div>
+        <ul class="paper-list reveal" style="margin-top: 2rem;">
+          <li class="paper-entry">
+            <div class="paper-id">ARC·2025·A<br>Essay</div>
+            <div class="paper-body">
+              <h3><a href="#">Notes from the Chinese Crypto Salon, 2023–2025</a></h3>
+              <p class="paper-authors">Kay Yu · with contributions from the Uncommons reading group</p>
+              <p class="paper-abstract">
+                A long essay documenting two years of salons, reading groups, and translation work across the
+                Chinese-speaking crypto ecosystem. Served as the empirical basis for the Paper-as-Method proposal.
+              </p>
+              <div class="paper-tags">
+                <span class="paper-tag">Essay</span>
+                <span class="paper-tag">Ethnography</span>
+                <span class="paper-tag">中文</span>
+              </div>
+            </div>
+            <div class="paper-meta">
+              <span class="paper-status published">Published</span><br>
+              Mirror · 2025<br>
+              ~12,000w
+            </div>
+          </li>
+          <li class="paper-entry">
+            <div class="paper-id">ARC·2024·B<br>Translation</div>
+            <div class="paper-body">
+              <h3><a href="#">"Exit, Voice, and Loyalty" in the Age of Forks — Translation &amp; Commentary</a></h3>
+              <p class="paper-authors">Twone (trans.) · Kay Yu (commentary)</p>
+              <p class="paper-abstract">
+                A Chinese translation of Hirschman's canonical work, annotated with commentary situating his
+                framework inside the blockchain forking debate. Circulated as a reading-group companion.
+              </p>
+              <div class="paper-tags">
+                <span class="paper-tag">Translation</span>
+                <span class="paper-tag">Theory</span>
+                <span class="paper-tag">中文</span>
+              </div>
+            </div>
+            <div class="paper-meta">
+              <span class="paper-status published">Published</span><br>
+              2024<br>
+              Internal
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Theses -->
+    <section id="theses">
+      <div class="wrap">
+        <div class="section-label">Open Theses · Calls for Contributors</div>
+        <div class="reveal">
+          <h2>Propositions awaiting<br>a <em>cell.</em></h2>
+          <p style="max-width: 58ch; color: var(--ink-soft); margin-top: 0.6rem;">
+            A thesis is not a topic. It is a proposition that can be argued for or against. Members may propose new
+            theses at any time. The bar is not consensus but sufficient interest — 4–5 members willing to form a cell.
+          </p>
+        </div>
+        <ul class="thesis-list reveal">
+          <li class="thesis-item">
+            <span class="thesis-marker">T–07</span>
+            <span class="thesis-text">Crypto and the Global South: is stablecoin adoption a form of monetary sovereignty or a new kind of dependency?</span>
+          </li>
+          <li class="thesis-item">
+            <span class="thesis-marker">T–08</span>
+            <span class="thesis-text">The Collapse of Web2 Creator Platforms: what replaces the newsletter, the channel, and the feed?</span>
+          </li>
+          <li class="thesis-item">
+            <span class="thesis-marker">T–09</span>
+            <span class="thesis-text">Regulation by Audit: are SOC-2, ISO, and smart-contract audits the real governance layer of the internet?</span>
+          </li>
+          <li class="thesis-item">
+            <span class="thesis-marker">T–10</span>
+            <span class="thesis-text">Post-labor Economies: what does a political economy look like when marginal cognitive labor is free?</span>
+          </li>
+          <li class="thesis-item">
+            <span class="thesis-marker">T–11</span>
+            <span class="thesis-text">Coordination Failure in Open Source: why did the grant-funded commons fail to produce durable institutions?</span>
+          </li>
+        </ul>
+        <div class="reveal" style="margin-top: 2rem;">
+          <a href="join.html" class="btn btn-ghost">Propose a Thesis →</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="footer-mount"></div>
+  <script src="partials.js"></script>
+  <script>
+    Uncommons.render('papers');
+    // simple filter
+    const chips = document.querySelectorAll('.filter-chip');
+    const entries = document.querySelectorAll('.paper-list [data-status]');
+    chips.forEach(chip => chip.addEventListener('click', () => {
+      chips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      const f = chip.dataset.filter;
+      entries.forEach(e => {
+        e.style.display = (f === 'all' || e.dataset.status === f) ? '' : 'none';
+      });
+    }));
+  </script>
+</body>
+</html>
