@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Join — Uncommons Collective</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .apply-form {
+      border: 1px solid var(--rule);
+      background: var(--paper);
+      padding: 2.4rem;
+      margin-top: 2rem;
+    }
+    .apply-form label {
+      display: block;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 0.5rem;
+      margin-top: 1.4rem;
+    }
+    .apply-form label:first-of-type { margin-top: 0; }
+    .apply-form input,
+    .apply-form textarea,
+    .apply-form select {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border: 1px solid var(--rule);
+      background: var(--paper);
+      font-family: var(--serif);
+      font-size: 1rem;
+      color: var(--ink);
+      transition: border-color 0.15s;
+    }
+    .apply-form input:focus,
+    .apply-form textarea:focus,
+    .apply-form select:focus {
+      outline: none;
+      border-color: var(--ink);
+    }
+    .apply-form textarea { min-height: 120px; resize: vertical; font-family: var(--serif); }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; }
+    @media (max-width: 640px) { .form-grid { grid-template-columns: 1fr; } }
+    .form-hint {
+      font-size: 0.82rem;
+      color: var(--ink-faint);
+      margin-top: 0.4rem;
+      font-style: italic;
+    }
+    .apply-form button {
+      margin-top: 2rem;
+      width: 100%;
+    }
+    .criteria-list {
+      list-style: none;
+      counter-reset: crit;
+      margin-top: 1.6rem;
+    }
+    .criteria-list li {
+      counter-increment: crit;
+      padding: 1.2rem 0;
+      border-bottom: 1px solid var(--rule);
+      padding-left: 3.4rem;
+      position: relative;
+    }
+    .criteria-list li:last-child { border-bottom: none; }
+    .criteria-list li::before {
+      content: "§ " counter(crit, decimal-leading-zero);
+      position: absolute;
+      left: 0;
+      top: 1.25rem;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      color: var(--ink-faint);
+    }
+    .criteria-list h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+    .criteria-list p { font-size: 0.92rem; color: var(--ink-soft); margin: 0; }
+  </style>
+</head>
+<body>
+  <div id="nav-mount"></div>
+
+  <main>
+    <header class="page-header">
+      <div class="wrap">
+        <p class="eyebrow">Recruitment · MVP Sprint 02 · Open through May 2026</p>
+        <h1>One cell. One paper.<br>One <em>test.</em></h1>
+        <p class="lede">
+          We are recruiting Research Members for Sprint 02, forming June 2026.
+          We want 5–8 people who will actually do the work. The gap between
+          "cool idea" and "I will write 2,000 words in three weeks" is the
+          central test of this whole experiment.
+        </p>
+      </div>
+    </header>
+
+    <!-- What we're looking for -->
+    <section>
+      <div class="wrap">
+        <div class="section-label">§ 01 · What We're Looking For</div>
+        <div class="prose reveal">
+          <h2>A working <em>researcher.</em></h2>
+          <p>
+            The ideal Research Member is someone already doing the work — an
+            academic mid-way through a dissertation, a practitioner writing
+            on the side, a translator with a body of work, a policy analyst
+            with opinions. What matters is track record and willingness to
+            ship.
+          </p>
+          <ul class="criteria-list">
+            <li>
+              <h3>You have written something serious</h3>
+              <p>A thesis, a paper, an essay, a long technical post, a translation. Anything with a point of view and a bibliography.</p>
+            </li>
+            <li>
+              <h3>You can commit to a six-week sprint</h3>
+              <p>This is the hard one. Six weeks of disciplined, time-boxed work. Weekly sync calls. Drafts by the deadline. No exceptions.</p>
+            </li>
+            <li>
+              <h3>You work well with three to seven other people</h3>
+              <p>Cells fragment when members hoard, withdraw, or moralize. We want generous, opinionated collaborators.</p>
+            </li>
+            <li>
+              <h3>You have a position on something</h3>
+              <p>We publish propositions, not summaries. If you cannot name a thesis you want to argue for, this is not the right fit.</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Paths -->
+    <section>
+      <div class="wrap">
+        <div class="section-label">§ 02 · Three Ways In</div>
+        <div class="reveal">
+          <h2>Match the commitment<br>to your <em>bandwidth.</em></h2>
+        </div>
+        <div class="tiers reveal">
+          <div class="tier">
+            <div class="tier-badge">Path A</div>
+            <h3>Observer</h3>
+            <ul>
+              <li>Subscribe to the newsletter</li>
+              <li>Attend open salons</li>
+              <li>Read what we publish</li>
+              <li>Apply to a cell later</li>
+            </ul>
+            <p class="tier-req">Free · Open registration · No expectation</p>
+          </div>
+          <div class="tier">
+            <div class="tier-badge">Path B</div>
+            <h3>Contribute to a Cell</h3>
+            <ul>
+              <li>Join an existing Sprint 02 cell</li>
+              <li>Contribute 2,000–4,000 words</li>
+              <li>Participate in weekly syncs</li>
+              <li>Peer review one adjacent paper</li>
+            </ul>
+            <p class="tier-req">Apply below · By invitation after review</p>
+          </div>
+          <div class="tier">
+            <div class="tier-badge">Path C</div>
+            <h3>Lead a Cell</h3>
+            <ul>
+              <li>Propose a thesis</li>
+              <li>Recruit 4–5 co-authors</li>
+              <li>Run the six-week sprint</li>
+              <li>Steward publication &amp; flywheel</li>
+            </ul>
+            <p class="tier-req">By nomination · Track record required</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Application form -->
+    <section id="apply">
+      <div class="wrap">
+        <div class="section-label">§ 03 · Apply</div>
+        <div class="prose reveal">
+          <h2>Tell us what<br>you want to <em>write.</em></h2>
+          <p style="color: var(--ink-soft);">
+            Applications are reviewed on a rolling basis by the editorial
+            board. We read every submission. Typical response time is 7–10
+            days. There are no application fees.
+          </p>
+
+          <form class="apply-form reveal" onsubmit="event.preventDefault(); alert('This is a mock form. Email hello@uncommons.xyz to apply.')">
+            <div class="form-grid">
+              <div>
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required />
+              </div>
+              <div>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required />
+              </div>
+            </div>
+
+            <div class="form-grid">
+              <div>
+                <label for="affil">Affiliation</label>
+                <input type="text" id="affil" name="affil" placeholder="University, org, or independent" />
+              </div>
+              <div>
+                <label for="path">Path</label>
+                <select id="path" name="path">
+                  <option>Observer</option>
+                  <option selected>Contribute to a cell</option>
+                  <option>Lead a cell</option>
+                </select>
+              </div>
+            </div>
+
+            <label for="prior">Prior Work · link to one piece of writing</label>
+            <input type="url" id="prior" name="prior" placeholder="https://…" />
+            <p class="form-hint">A paper, thesis, essay, translation, or substantive post. One link is enough.</p>
+
+            <label for="thesis">A thesis you would want to argue for</label>
+            <textarea id="thesis" name="thesis" placeholder="Not a topic. A proposition. One or two sentences."></textarea>
+            <p class="form-hint">This is the most important field. A topic gathers; a proposition commits.</p>
+
+            <label for="commit">What commitment can you realistically make?</label>
+            <textarea id="commit" name="commit" placeholder="Hours per week, timezone, language(s), constraints."></textarea>
+
+            <button class="btn btn-primary" type="submit">Submit Application</button>
+          </form>
+
+          <p style="text-align: center; margin-top: 2rem; font-size: 0.9rem; color: var(--ink-soft);">
+            Or write to us directly at
+            <a href="mailto:hello@uncommons.xyz" style="color: var(--ink);">hello@uncommons.xyz</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section style="border-bottom: none;">
+      <div class="wrap">
+        <div class="section-label">§ 04 · Frequently Asked</div>
+        <div class="prose reveal">
+          <h3 style="font-size: 1.05rem;">Do I need to be based in Asia?</h3>
+          <p style="color: var(--ink-soft); margin-bottom: 1.6rem;">No. The collective is remote-first and has members across Hong Kong, Taipei, Singapore, Shanghai, London, and New York. Weekly sync calls rotate across timezones.</p>
+
+          <h3 style="font-size: 1.05rem;">Do I need to speak Chinese?</h3>
+          <p style="color: var(--ink-soft); margin-bottom: 1.6rem;">No. English is the primary working language. Chinese translation and dissemination is done by members with that capacity.</p>
+
+          <h3 style="font-size: 1.05rem;">Is there compensation?</h3>
+          <p style="color: var(--ink-soft); margin-bottom: 1.6rem;">Yes, where funding allows. 40% of sponsored and advisory revenue is distributed to contributors. Donor-funded papers include a stipend for the lead author. Early sprints are lightly funded; this will change as the collective matures.</p>
+
+          <h3 style="font-size: 1.05rem;">What if I want to fund a paper?</h3>
+          <p style="color: var(--ink-soft); margin-bottom: 1.6rem;">Write to <a href="mailto:partners@uncommons.xyz" style="color: var(--ink);">partners@uncommons.xyz</a>. We accept sponsored research subject to our editorial independence clause.</p>
+
+          <h3 style="font-size: 1.05rem;">How do I just follow along?</h3>
+          <p style="color: var(--ink-soft);">Subscribe to the newsletter (link in the footer). Papers and salons are announced there.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="footer-mount"></div>
+  <script src="partials.js"></script>
+  <script>Uncommons.render('join');</script>
+</body>
+</html>

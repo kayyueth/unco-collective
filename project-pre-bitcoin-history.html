@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Pre-History of Bitcoin — Uncommons Collective</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ══════════════════════════════════════════════════════════
+       INFOGRAPHIC  —  light full-bleed section
+    ══════════════════════════════════════════════════════════ */
+    .ig-section {
+      background: #f5f1e8;
+      color: #1c1917;
+      padding: 80px 0 72px;
+      border-top: 1px solid rgba(28,25,23,0.08);
+      border-bottom: 1px solid rgba(28,25,23,0.08);
+      position: relative;
+      overflow: hidden;
+    }
+    /* subtle radial tints in background */
+    .ig-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 50%, rgba(56,189,248,0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 80% 40%, rgba(251,191,36,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .ig-section .section-label        { color: rgba(28,25,23,0.3); }
+    .ig-section .section-label::after  { background: rgba(28,25,23,0.1); }
+
+    /* ── Category color tokens ─────────────────────────────── */
+    :root {
+      --cx: #0ea5e9;   /* Cryptography  — sky blue       */
+      --co: #16a34a;   /* Computer/Net  — emerald        */
+      --cp: #dc2626;   /* Politics      — red            */
+      --ce: #d97706;   /* Economics     — amber          */
+      --cbtc: #b45309; /* Bitcoin       — dark gold      */
+    }
+
+    /* ── Stat cards ────────────────────────────────────────── */
+    .ig-stats {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1px;
+      background: rgba(28,25,23,0.1);
+      border: 1px solid rgba(28,25,23,0.1);
+      margin-bottom: 2rem;
+    }
+    .ig-stat {
+      padding: 1.2rem 1.4rem 1rem;
+      background: #f5f1e8;
+      cursor: pointer;
+      transition: background 0.2s;
+      border: none;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+    }
+    .ig-stat::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .ig-stat:hover::before, .ig-stat.active::before { opacity: 1; }
+    .ig-stat[data-filter-cat="all"]::before              { background: rgba(28,25,23,0.04); }
+    .ig-stat[data-filter-cat="Cryptography"]::before     { background: rgba(14,165,233,0.1); }
+    .ig-stat[data-filter-cat="Computer & Internet"]::before { background: rgba(22,163,74,0.1); }
+    .ig-stat[data-filter-cat="Politics"]::before         { background: rgba(220,38,38,0.1); }
+    .ig-stat[data-filter-cat="Economics"]::before        { background: rgba(217,119,6,0.1); }
+
+    .ig-stat-num {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 2.6rem;
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.3rem;
+      position: relative;
+    }
+    .ig-stat-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.56rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      position: relative;
+    }
+    .ig-stat-bar { height: 2px; margin-top: 1rem; border-radius: 1px; position: relative; }
+
+    .n-all   { color: rgba(28,25,23,0.6); }
+    .n-x     { color: var(--cx); }
+    .n-o     { color: var(--co); }
+    .n-p     { color: var(--cp); }
+    .n-e     { color: var(--ce); }
+    .b-all   { background: rgba(28,25,23,0.2); }
+    .b-x     { background: var(--cx); }
+    .b-o     { background: var(--co); }
+    .b-p     { background: var(--cp); }
+    .b-e     { background: var(--ce); }
+    .l-all   { color: rgba(28,25,23,0.4); }
+    .l-x     { color: var(--cx); }
+    .l-o     { color: var(--co); }
+    .l-p     { color: var(--cp); }
+    .l-e     { color: var(--ce); }
+
+    /* ── Filter bar ────────────────────────────────────────── */
+    .ig-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem 2rem;
+      align-items: center;
+      margin-bottom: 1.4rem;
+    }
+    .ig-filter-group { display: flex; align-items: center; gap: 0.45rem; }
+    .ig-filter-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.54rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(28,25,23,0.3);
+      white-space: nowrap;
+    }
+    .ig-chip {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: rgba(28,25,23,0.45);
+      border: 1px solid rgba(28,25,23,0.15);
+      padding: 0.28rem 0.65rem;
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.15s;
+      border-radius: 1px;
+    }
+    .ig-chip:hover { color: #1c1917; border-color: rgba(28,25,23,0.4); }
+    .ig-chip.active            { color: #f5f1e8; background: rgba(28,25,23,0.82); border-color: transparent; }
+    .ig-chip[data-cat="Cryptography"].active        { background: var(--cx); color: #fff; border-color: var(--cx); }
+    .ig-chip[data-cat="Computer & Internet"].active { background: var(--co); color: #fff; border-color: var(--co); }
+    .ig-chip[data-cat="Politics"].active            { background: var(--cp); color: #fff; border-color: var(--cp); }
+    .ig-chip[data-cat="Economics"].active           { background: var(--ce); color: #fff; border-color: var(--ce); }
+    .ig-chip[data-type="Theory"].active    { background: #7c3aed; color: #fff; border-color: #7c3aed; }
+    .ig-chip[data-type="Event"].active     { background: #dc2626; color: #fff; border-color: #dc2626; }
+    .ig-chip[data-type="Practice"].active  { background: #059669; color: #fff; border-color: #059669; }
+    .ig-chip[data-type="Statement"].active { background: #ea580c; color: #fff; border-color: #ea580c; }
+
+    .ig-count {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      color: rgba(28,25,23,0.28);
+      margin-left: auto;
+      transition: color 0.3s;
+    }
+
+    /* ── SVG container ─────────────────────────────────────── */
+    .ig-viz-wrap {
+      position: relative;
+      overflow-x: auto;
+      overflow-y: visible;
+      -webkit-overflow-scrolling: touch;
+      margin: 0 -2rem;
+      padding: 0 2rem;
+    }
+    .ig-svg {
+      display: block;
+      min-width: 860px;
+      width: 100%;
+      height: auto;
+    }
+
+    /* Bitcoin pulse animation */
+    @keyframes btcPulse {
+      0%,100% { opacity: 0.45; r: 13; }
+      50%      { opacity: 0;   r: 22; }
+    }
+    .btc-ring { animation: btcPulse 2.4s ease-in-out infinite; }
+
+    /* node hover */
+    #ig-svg g[data-idx] {
+      transition: filter 0.18s, opacity 0.22s;
+      cursor: pointer;
+    }
+    #ig-svg g[data-idx]:hover { filter: brightness(0.8); }
+
+    /* ── Tooltip ───────────────────────────────────────────── */
+    .ig-tooltip {
+      position: fixed;
+      pointer-events: none;
+      background: rgba(255,253,248,0.97);
+      border: 1px solid rgba(28,25,23,0.12);
+      padding: 0.8rem 1rem;
+      max-width: 280px;
+      z-index: 9000;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.14s, transform 0.14s;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    .ig-tooltip.vis {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .tt-cat {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.54rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.35rem;
+    }
+    .tt-year {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 1rem;
+      color: rgba(28,25,23,0.35);
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+    .tt-title {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 1.05rem;
+      line-height: 1.3;
+      color: #1c1917;
+      margin-bottom: 0.3rem;
+    }
+    .tt-people {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.57rem;
+      color: rgba(28,25,23,0.45);
+      letter-spacing: 0.02em;
+    }
+    .tt-type {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.52rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 0.4rem;
+      color: rgba(28,25,23,0.3);
+    }
+
+    /* ── Detail panel ──────────────────────────────────────── */
+    .ig-detail {
+      margin-top: 1.4rem;
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1), opacity 0.3s;
+      border-left: 3px solid transparent;
+    }
+    .ig-detail.open { max-height: 260px; opacity: 1; }
+    .ig-detail-inner {
+      display: grid;
+      grid-template-columns: 88px 1fr auto;
+      gap: 0 2rem;
+      padding: 1.6rem 1.8rem;
+      background: rgba(28,25,23,0.04);
+      border: 1px solid rgba(28,25,23,0.1);
+      align-items: start;
+    }
+    .dd-year {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 3.2rem;
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+    .dd-title {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 1.45rem;
+      font-weight: 400;
+      line-height: 1.25;
+      color: #1c1917;
+      margin-bottom: 0.4rem;
+    }
+    .dd-people {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.04em;
+      color: rgba(28,25,23,0.45);
+      margin-bottom: 0.9rem;
+    }
+    .dd-tags { display: flex; gap: 0.32rem; flex-wrap: wrap; }
+    .dd-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.52rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      border: 1px solid rgba(28,25,23,0.15);
+      padding: 0.1rem 0.4rem;
+      color: rgba(28,25,23,0.5);
+    }
+    .dd-right { text-align: right; }
+    .dd-cat {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.56rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.18rem 0.55rem;
+      border: 1px solid;
+      display: inline-block;
+      margin-bottom: 0.4rem;
+    }
+    .dd-type {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.52rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(28,25,23,0.3);
+      display: block;
+    }
+    .dd-close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      color: rgba(28,25,23,0.28);
+      padding: 0;
+      margin-top: 0.5rem;
+      transition: color 0.15s;
+      display: block;
+    }
+    .dd-close:hover { color: #1c1917; }
+
+    /* ── Legend ────────────────────────────────────────────── */
+    .ig-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem 2.4rem;
+      align-items: center;
+      margin-top: 1.4rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid rgba(28,25,23,0.1);
+    }
+    .ig-leg-group { display: flex; align-items: center; gap: 0.7rem; }
+    .ig-leg-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.52rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(28,25,23,0.25);
+    }
+    .ig-leg-item {
+      display: flex;
+      align-items: center;
+      gap: 0.32rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.57rem;
+      color: rgba(28,25,23,0.45);
+    }
+    .ig-leg-shape { width: 11px; height: 11px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+    .ig-hint {
+      margin-left: auto;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.52rem;
+      letter-spacing: 0.07em;
+      color: rgba(28,25,23,0.22);
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 640px) {
+      .ig-stats { grid-template-columns: repeat(3,1fr); }
+      .ig-detail-inner { grid-template-columns: 60px 1fr; }
+      .dd-right { display: none; }
+    }
+    @media (max-width: 400px) {
+      .ig-stats { grid-template-columns: repeat(2,1fr); }
+    }
+  </style>
+</head>
+<body>
+  <div id="nav-mount"></div>
+  <main>
+
+    <!-- Page header -->
+    <header class="page-header">
+      <div class="wrap">
+        <p class="eyebrow"><a href="project.html" style="color:inherit;">Projects</a> · Column · Group Portrait</p>
+        <h1>The Pre-History<br>of <em>Bitcoin.</em></h1>
+        <p class="lede">A group portrait of the cryptographers who made Bitcoin possible — their ideas, their tools, and their practice. Documentary non-fiction, written from the perspective of historical materialism.</p>
+        <div style="display:flex;gap:2rem;flex-wrap:wrap;margin-top:1.8rem;font-family:'DM Mono',monospace;font-size:0.73rem;color:var(--ink-soft);">
+          <span>Kay Yu · Big Song · Shiyu</span>
+          <span style="color:var(--ink-faint)">·</span>
+          <span>In Progress · Wk 1</span>
+          <span style="color:var(--ink-faint)">·</span>
+          <span>~30,000w est.</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Overview -->
+    <section>
+      <div class="wrap">
+        <div class="section-label">Overview</div>
+        <div class="prose reveal">
+          <p>Bitcoin = Ideas + Technology + Practice. This column reconstructs its pre-history as a group portrait — not a hagiography, not a whitepaper archaeology, but documentary non-fiction that treats its subjects as human beings shaped by their moment.</p>
+          <p>The analytical lens is historical materialism: technology does not emerge from genius alone. The Crypto Wars, the collapse of Bretton Woods, the 2008 financial meltdown — these are not background context. They are the forces that made the cryptographers' work legible, urgent, and eventually inevitable.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cast -->
+    <section>
+      <div class="wrap">
+        <div class="section-label">The Cast</div>
+        <div class="method-grid reveal">
+          <div class="method-cell">
+            <div class="method-index" style="color:#fbbf24;">Ideas</div>
+            <h3>The Idealists</h3>
+            <p style="color:var(--ink-soft);font-size:0.8rem;margin-bottom:0.7rem;">Shiyu · Big Song</p>
+            <p>Timothy C. May · Jacob Appelbaum · Julian Assange</p>
+          </div>
+          <div class="method-cell">
+            <div class="method-index" style="color:#38bdf8;">Technology</div>
+            <h3>The Cryptographers</h3>
+            <p style="color:var(--ink-soft);font-size:0.8rem;margin-bottom:0.7rem;">Kay Yu · Big Song</p>
+            <p>David Chaum · Nick Szabo · Wei Dai · Adam Back</p>
+          </div>
+          <div class="method-cell">
+            <div class="method-index" style="color:#4ade80;">Practice</div>
+            <h3>The Practitioners</h3>
+            <p style="color:var(--ink-soft);font-size:0.8rem;margin-bottom:0.7rem;">Kay Yu</p>
+            <p>Satoshi Nakamoto · Hal Finney · Gavin Andresen</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════ INTERACTIVE INFOGRAPHIC ══════════════ -->
+    <section class="ig-section" id="timeline">
+      <div class="wrap">
+        <div class="section-label">Interactive Timeline · 1912–2009</div>
+
+        <!-- Stat cards -->
+        <div class="ig-stats" id="ig-stats">
+          <button class="ig-stat active" data-filter-cat="all">
+            <div class="ig-stat-num n-all" id="cnt-all">76</div>
+            <div class="ig-stat-label l-all">All Events</div>
+            <div class="ig-stat-bar b-all"></div>
+          </button>
+          <button class="ig-stat" data-filter-cat="Cryptography">
+            <div class="ig-stat-num n-x" id="cnt-x"></div>
+            <div class="ig-stat-label l-x">Cryptography</div>
+            <div class="ig-stat-bar b-x"></div>
+          </button>
+          <button class="ig-stat" data-filter-cat="Computer & Internet">
+            <div class="ig-stat-num n-o" id="cnt-o"></div>
+            <div class="ig-stat-label l-o">Computer &amp; Net</div>
+            <div class="ig-stat-bar b-o"></div>
+          </button>
+          <button class="ig-stat" data-filter-cat="Politics">
+            <div class="ig-stat-num n-p" id="cnt-p"></div>
+            <div class="ig-stat-label l-p">Politics</div>
+            <div class="ig-stat-bar b-p"></div>
+          </button>
+          <button class="ig-stat" data-filter-cat="Economics">
+            <div class="ig-stat-num n-e" id="cnt-e"></div>
+            <div class="ig-stat-label l-e">Economics</div>
+            <div class="ig-stat-bar b-e"></div>
+          </button>
+        </div>
+
+        <!-- Filters -->
+        <div class="ig-filters">
+          <div class="ig-filter-group">
+            <span class="ig-filter-label">Cat</span>
+            <div style="display:flex;gap:0.3rem" id="ig-cat-chips">
+              <button class="ig-chip active" data-cat="all">All</button>
+              <button class="ig-chip" data-cat="Cryptography">Crypto</button>
+              <button class="ig-chip" data-cat="Computer & Internet">Computer</button>
+              <button class="ig-chip" data-cat="Politics">Politics</button>
+              <button class="ig-chip" data-cat="Economics">Economics</button>
+            </div>
+          </div>
+          <div class="ig-filter-group">
+            <span class="ig-filter-label">Type</span>
+            <div style="display:flex;gap:0.3rem" id="ig-type-chips">
+              <button class="ig-chip active" data-type="all">All</button>
+              <button class="ig-chip" data-type="Theory">Theory</button>
+              <button class="ig-chip" data-type="Event">Event</button>
+              <button class="ig-chip" data-type="Practice">Practice</button>
+              <button class="ig-chip" data-type="Statement">Statement</button>
+            </div>
+          </div>
+          <span class="ig-count" id="ig-count">76 entries</span>
+        </div>
+
+        <!-- SVG -->
+        <div class="ig-viz-wrap">
+          <svg class="ig-svg" id="ig-svg" viewBox="0 0 1200 420" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <!-- per-category glow filters -->
+              <filter id="gx" x="-60%" y="-60%" width="220%" height="220%">
+                <feGaussianBlur stdDeviation="4" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+              <filter id="go" x="-60%" y="-60%" width="220%" height="220%">
+                <feGaussianBlur stdDeviation="4" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+              <filter id="gp" x="-60%" y="-60%" width="220%" height="220%">
+                <feGaussianBlur stdDeviation="4" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+              <filter id="ge" x="-60%" y="-60%" width="220%" height="220%">
+                <feGaussianBlur stdDeviation="4" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+              <filter id="gbtc" x="-80%" y="-80%" width="260%" height="260%">
+                <feGaussianBlur stdDeviation="7" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+              <!-- selection ring glow -->
+              <filter id="sel" x="-60%" y="-60%" width="220%" height="220%">
+                <feGaussianBlur stdDeviation="3" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+          </svg>
+        </div>
+
+        <!-- Detail panel -->
+        <div class="ig-detail" id="ig-detail">
+          <div class="ig-detail-inner">
+            <div class="dd-year" id="dd-year"></div>
+            <div>
+              <div class="dd-title"  id="dd-title"></div>
+              <div class="dd-people" id="dd-people"></div>
+              <div class="dd-tags"   id="dd-tags"></div>
+            </div>
+            <div class="dd-right">
+              <div class="dd-cat"  id="dd-cat"></div>
+              <span class="dd-type" id="dd-type"></span>
+              <button class="dd-close" id="dd-close">✕ close</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Legend -->
+        <div class="ig-legend">
+          <div class="ig-leg-group">
+            <span class="ig-leg-label">Shape</span>
+            <span class="ig-leg-item">
+              <svg class="ig-leg-shape" viewBox="-6 -6 12 12"><circle r="5" fill="none" stroke="rgba(240,236,228,0.5)" stroke-width="1.8"/></svg>Theory
+            </span>
+            <span class="ig-leg-item">
+              <svg class="ig-leg-shape" viewBox="-6 -6 12 12"><rect x="-4.5" y="-4.5" width="9" height="9" fill="rgba(240,236,228,0.5)"/></svg>Event
+            </span>
+            <span class="ig-leg-item">
+              <svg class="ig-leg-shape" viewBox="-6 -6 12 12"><circle r="5" fill="rgba(240,236,228,0.5)"/></svg>Practice
+            </span>
+            <span class="ig-leg-item">
+              <svg class="ig-leg-shape" viewBox="-7 -7 14 14"><polygon points="0,-6 6,0 0,6 -6,0" fill="rgba(240,236,228,0.5)"/></svg>Statement
+            </span>
+          </div>
+          <div class="ig-leg-group">
+            <span class="ig-leg-label">Color</span>
+            <span class="ig-leg-item" style="color:var(--cx)"><svg class="ig-leg-shape" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="#38bdf8"/></svg>Cryptography</span>
+            <span class="ig-leg-item" style="color:var(--co)"><svg class="ig-leg-shape" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="#4ade80"/></svg>Computer</span>
+            <span class="ig-leg-item" style="color:var(--cp)"><svg class="ig-leg-shape" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="#f87171"/></svg>Politics</span>
+            <span class="ig-leg-item" style="color:var(--ce)"><svg class="ig-leg-shape" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="#fbbf24"/></svg>Economics</span>
+          </div>
+          <span class="ig-hint">Hover · Click to expand</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Structure -->
+    <section>
+      <div class="wrap">
+        <div class="section-label">Column Structure</div>
+        <ul class="thesis-list reveal">
+          <li class="thesis-item">
+            <span class="thesis-marker">I</span>
+            <span class="thesis-text"><strong>Big History (5–10k)</strong> — The political-economic conditions that made Bitcoin necessary: Cold War cryptography, the Crypto Wars, financial crises, the surveillance state.</span>
+          </li>
+          <li class="thesis-item">
+            <span class="thesis-marker">II</span>
+            <span class="thesis-text"><strong>Group Portraits (5k × 6)</strong> — Six figures written together: how their contributions intersected, where they disagreed, what each one added to the chain that became Bitcoin.</span>
+          </li>
+          <li class="thesis-item">
+            <span class="thesis-marker">III</span>
+            <span class="thesis-text"><strong>Opinion (5–10k)</strong> — Two analytical threads: Technology × Big History (Kay) and Technology × Justice (Shiyu).</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Perspectives -->
+    <section>
+      <div class="wrap">
+        <div class="section-label">Analytical Perspectives</div>
+        <div class="featured-paper reveal">
+          <div class="fp-left">
+            <div class="fp-meta">Thread 01 · Kay Yu</div>
+            <h3>Technology × Big History</h3>
+            <p>How do macro political-economic conditions shape which technologies get invented, by whom, and why they succeed or fail? The cryptographers' story is inseparable from the surveillance apparatus, the collapse of analog monetary sovereignty, and the ideological vacuum left by the Cold War's end.</p>
+          </div>
+          <div class="fp-right">
+            <div class="fp-meta">Thread 02 · Shiyu</div>
+            <h3>Technology × Justice</h3>
+            <p>A technology built on libertarian premises — radical individual sovereignty, trustlessness, the elimination of intermediaries — became a dark jungle amplifying human vice. What happens when tools of freedom become instruments of capture?</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Process -->
+    <section>
+      <div class="wrap">
+        <div class="section-label">Process</div>
+        <div class="method-grid reveal">
+          <div class="method-cell">
+            <div class="method-index">W1</div>
+            <h3>Brainstorm</h3>
+            <p>Wide reading. Establish the cast, positions, and timeline. Lock the analytical frame.</p>
+          </div>
+          <div class="method-cell">
+            <div class="method-index">W2</div>
+            <h3>Outline</h3>
+            <p>Find the angle. Draft the structural outline. Divide portrait assignments.</p>
+          </div>
+          <div class="method-cell">
+            <div class="method-index">W3–4</div>
+            <h3>Research &amp; Draft</h3>
+            <p>Gather primary sources. Write the big history and individual portraits.</p>
+          </div>
+          <div class="method-cell">
+            <div class="method-index">W5+</div>
+            <h3>Thesis &amp; Edit</h3>
+            <p>Distill the analytical argument. Open-source the draft for community review.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Tooltip (fixed, above everything) -->
+  <div class="ig-tooltip" id="ig-tooltip">
+    <div class="tt-cat"    id="tt-cat"></div>
+    <div class="tt-year"   id="tt-year"></div>
+    <div class="tt-title"  id="tt-title"></div>
+    <div class="tt-people" id="tt-people"></div>
+    <div class="tt-type"   id="tt-type"></div>
+  </div>
+
+  <div id="footer-mount"></div>
+  <script src="partials.js"></script>
+  <script>
+    Uncommons.render('project');
+
+    /* ══════════════════════════════════════════════════════════
+       DATA
+    ══════════════════════════════════════════════════════════ */
+    const DATA = [
+      {y:1912,cat:"Economics",sub:"Classical Liberalism",tags:"Currency and Credit",h:"The Theory of Money and Credit",type:"Theory",p:"Ludwig von Mises"},
+      {y:1914,cat:"Politics",sub:"International Relations",tags:"Warfare",h:"World War I",type:"Event",p:"International"},
+      {y:1922,cat:"Politics",sub:"International Relations",tags:"New Political Entity",h:"Founding Soviet Union",type:"Event",p:"Soviet Union"},
+      {y:1929,cat:"Politics",sub:"Fiscal and Monetary",tags:"Financial Crisis",h:"The Great Depression",type:"Event",p:"US Government"},
+      {y:1933,cat:"Politics",sub:"Economic Program",tags:"Public Work, Financial Reforms",h:"New Deal",type:"Event",p:"Franklin D. Roosevelt"},
+      {y:1936,cat:"Economics",sub:"Keynesianism",tags:"Employment, Interest, Money",h:"The General Theory of Employment, Interest and Money",type:"Theory",p:"John Maynard Keynes"},
+      {y:1939,cat:"Politics",sub:"International Relations",tags:"Warfare",h:"World War II",type:"Event",p:"International"},
+      {y:1940,cat:"Cryptography",sub:"Wartime Cryptography",tags:"Warfare, Computation",h:"Developing the Bombe",type:"Practice",p:"Alan Turing"},
+      {y:1941,cat:"Cryptography",sub:"Wartime Cryptography",tags:"Warfare",h:"Cryptanalysis of the Enigma",type:"Event",p:"UK Government"},
+      {y:1944,cat:"Economics",sub:"Classical Liberalism",tags:"Government",h:"The Road to Serfdom",type:"Theory",p:"Friedrich Hayek"},
+      {y:1947,cat:"Politics",sub:"International Relations",tags:"Geopolitical Tension",h:"Cold War",type:"Event",p:"US Government, Soviet Union"},
+      {y:1949,cat:"Economics",sub:"Classical Liberalism",tags:"Praxeology",h:"Human Action: A Treatise on Economics",type:"Theory",p:"Ludwig von Mises"},
+      {y:1951,cat:"Computer & Internet",sub:"Internet Technology",tags:"Computer",h:"Inventing UNIVAC I — 1st General-Purpose Computer",type:"Practice",p:"Eckert & Mauchly"},
+      {y:1952,cat:"Politics",sub:"National Security",tags:"Cybersecurity",h:"Founding National Security Agency",type:"Event",p:"US Government"},
+      {y:1957,cat:"Computer & Internet",sub:"Internet Technology",tags:"Programming",h:"Inventing Fortran — 1st High-Level Language",type:"Practice",p:"IBM"},
+      {y:1962,cat:"Economics",sub:"Anarcho Capitalism",tags:"Praxeology",h:"Man, Economy, and State, with Power and Market",type:"Theory",p:"Murray Rothbard"},
+      {y:1963,cat:"Economics",sub:"Anarcho Capitalism",tags:"Currency and Government",h:"What Has Government Done to Our Money?",type:"Theory",p:"Murray Rothbard"},
+      {y:1964,cat:"Politics",sub:"Counterculture",tags:"Free Speech",h:"Free Speech Movement",type:"Event",p:"United States"},
+      {y:1967,cat:"Politics",sub:"Counterculture",tags:"Anti-War",h:"Anti-Vietnam War Protests",type:"Event",p:"United States"},
+      {y:1969,cat:"Computer & Internet",sub:"Internet Technology",tags:"Computer Network",h:"Founding ARPANET",type:"Practice",p:"US Government"},
+      {y:1971,cat:"Computer & Internet",sub:"Internet Technology",tags:"CPU",h:"Inventing Intel 4004 — 1st CPU for Business",type:"Practice",p:"Intel"},
+      {y:1971,cat:"Computer & Internet",sub:"Distributed Computing",tags:"Hacking Technique",h:"Phreaking Movement",type:"Practice",p:"Joybubbles, John Draper"},
+      {y:1971,cat:"Politics",sub:"International Relations",tags:"Fiscal and Monetary",h:"Collapse of the Bretton Woods System",type:"Event",p:"International"},
+      {y:1973,cat:"Economics",sub:"Anarcho Capitalism",tags:"Government",h:"The Machinery of Freedom",type:"Theory",p:"David D. Friedman"},
+      {y:1973,cat:"Computer & Internet",sub:"Internet Technology",tags:"Operating System",h:"Launching Unix",type:"Practice",p:"Bell Labs"},
+      {y:1975,cat:"Computer & Internet",sub:"Internet Technology",tags:"Hobbyist Group",h:"Founding Homebrew Computer Club",type:"Practice",p:"Wozniak, Jobs"},
+      {y:1975,cat:"Computer & Internet",sub:"Internet Technology",tags:"Computer",h:"Inventing Altair 8800 — 1st Personal Computer",type:"Practice",p:"Ed Roberts"},
+      {y:1976,cat:"Economics",sub:"Classical Liberalism",tags:"Currency and Government",h:"Denationalisation of Money",type:"Theory",p:"Friedrich Hayek"},
+      {y:1976,cat:"Cryptography",sub:"Public Key Cryptography",tags:"Diffie–Hellman Key Exchange",h:"New Directions in Cryptography",type:"Theory",p:"Diffie & Hellman"},
+      {y:1978,cat:"Cryptography",sub:"Public Key Cryptography",tags:"Merkle Tree",h:"Protocols for Public Key Cryptosystem",type:"Theory",p:"Ralph C. Merkle"},
+      {y:1978,cat:"Cryptography",sub:"Public Key Cryptography",tags:"RSA",h:"A Method for Obtaining Digital Signatures and Public-Key Cryptosystems",type:"Theory",p:"Rivest, Shamir, Adleman"},
+      {y:1981,cat:"Cryptography",sub:"Distributed Computing",tags:"Anonymous Communication",h:"Untraceable Electronic Mail, Return Addresses, and Digital Pseudonyms",type:"Theory",p:"David Chaum"},
+      {y:1981,cat:"Computer & Internet",sub:"Cyberspace Paradigm",tags:"Hacker Group",h:"Founding Chaos Computer Club",type:"Practice",p:"Holland & Müller-Maguhn"},
+      {y:1982,cat:"Cryptography",sub:"Distributed Computing",tags:"BFT",h:"The Byzantine Generals Problem",type:"Theory",p:"Lamport, Shostak, Pease"},
+      {y:1982,cat:"Cryptography",sub:"Distributed Computing",tags:"Blind Signatures",h:"Blind Signatures for Untraceable Payments",type:"Theory",p:"David Chaum"},
+      {y:1982,cat:"Cryptography",sub:"Distributed Computing",tags:"Institution",h:"Founding International Association for Cryptologic Research",type:"Practice",p:"David Chaum"},
+      {y:1982,cat:"Cryptography",sub:"Distributed Computing",tags:"Distributed Security",h:"Computer Systems Established, Maintained, and Trusted by Mutually Suspicious Groups",type:"Theory",p:"David Chaum"},
+      {y:1984,cat:"Cryptography",sub:"Cyberspace Paradigm",tags:"Hacker Group",h:"Legion of Doom",type:"Practice",p:"Hacker Group"},
+      {y:1984,cat:"Computer & Internet",sub:"Cyberspace Paradigm",tags:"Hacker Culture",h:"Hackers: Heroes of the Computer Revolution",type:"Theory",p:"Steven Levy"},
+      {y:1986,cat:"Politics",sub:"National Security",tags:"Cybersecurity",h:"Computer Fraud and Abuse Act",type:"Event",p:"US Government"},
+      {y:1988,cat:"Politics",sub:"International Relations",tags:"Dissolution",h:"Dissolution of the Soviet Union",type:"Event",p:"Soviet Union"},
+      {y:1990,cat:"Cryptography",sub:"Distributed Computing",tags:"Digital Currency",h:"Founding DigiCash",type:"Practice",p:"David Chaum"},
+      {y:1990,cat:"Economics",sub:"Anarcho Capitalism",tags:"Credit and Government",h:"Banking, Nation States, and International Politics",type:"Theory",p:"Hans-Hermann Hoppe"},
+      {y:1990,cat:"Cryptography",sub:"Distributed Computing",tags:"Fault Tolerance",h:"Implementing Fault-Tolerant Services Using the State Machine Approach",type:"Theory",p:"Fred B. Schneider"},
+      {y:1990,cat:"Computer & Internet",sub:"Cyberspace Paradigm",tags:"Digital Rights",h:"Founding Electronic Frontier Foundation",type:"Practice",p:"Gilmore, Barlow, Kapor"},
+      {y:1991,cat:"Cryptography",sub:"Distributed Computing",tags:"Cryptographic Timestamp",h:"How to Time-Stamp a Digital Document",type:"Theory",p:"Haber & Stornetta"},
+      {y:1991,cat:"Cryptography",sub:"Privacy-Preserving Tool",tags:"Encryption Software",h:"Founding PGP — Pretty Good Privacy",type:"Practice",p:"Phil Zimmermann"},
+      {y:1991,cat:"Computer & Internet",sub:"Internet Technology",tags:"Information System",h:"Launching the World Wide Web",type:"Practice",p:"Tim Berners-Lee"},
+      {y:1991,cat:"Computer & Internet",sub:"Internet Technology",tags:"Operating System",h:"Launching Linux",type:"Practice",p:"Linus Torvalds"},
+      {y:1992,cat:"Computer & Internet",sub:"Cyberspace Paradigm",tags:"Crypto Anarchy",h:"The Crypto Anarchist Manifesto",type:"Statement",p:"Timothy C. May"},
+      {y:1993,cat:"Computer & Internet",sub:"Cyberspace Paradigm",tags:"Cypherpunk",h:"A Cypherpunk's Manifesto",type:"Statement",p:"Eric Hughes"},
+      {y:1993,cat:"Economics",sub:"Post-Keynesian",tags:"Modern Monetary Theory",h:"Soft Currency Economics",type:"Theory",p:"Warren Mosler"},
+      {y:1993,cat:"Politics",sub:"International Relations",tags:"New Political Entity",h:"Founding European Union",type:"Event",p:"European Union"},
+      {y:1994,cat:"Cryptography",sub:"Distributed Computing",tags:"Smart Contract",h:"Smart Contracts",type:"Theory",p:"Nick Szabo"},
+      {y:1995,cat:"Politics",sub:"Data Privacy",tags:"Digital Rights",h:"Data Protection Directive",type:"Event",p:"European Union"},
+      {y:1996,cat:"Computer & Internet",sub:"Cyberspace Paradigm",tags:"Cyberlibertarianism",h:"A Declaration of the Independence of Cyberspace",type:"Statement",p:"John Perry Barlow"},
+      {y:1997,cat:"Cryptography",sub:"Distributed Computing",tags:"Proof of Work",h:"Hashcash",type:"Theory",p:"Adam Back"},
+      {y:1998,cat:"Cryptography",sub:"Distributed Computing",tags:"Digital Currency",h:"DigiCash Goes Bankrupt",type:"Event",p:"David Chaum"},
+      {y:1998,cat:"Cryptography",sub:"Distributed Computing",tags:"Digital Currency",h:"b-money",type:"Theory",p:"Wei Dai"},
+      {y:1998,cat:"Cryptography",sub:"Distributed Computing",tags:"Digital Currency",h:"Bit Gold",type:"Theory",p:"Nick Szabo"},
+      {y:1998,cat:"Politics",sub:"Fiscal and Monetary",tags:"Financial Crisis",h:"Argentine Great Depression",type:"Event",p:"Argentine Government"},
+      {y:1998,cat:"Politics",sub:"Intellectual Property",tags:"Copyright",h:"Digital Millennium Copyright Act",type:"Event",p:"US Government"},
+      {y:1999,cat:"Politics",sub:"Fiscal and Monetary",tags:"Currency",h:"Introduction of the Euro",type:"Event",p:"European Union"},
+      {y:2000,cat:"Computer & Internet",sub:"Cyberspace Paradigm",tags:"Open Source",h:"The Cathedral and the Bazaar",type:"Theory",p:"Eric S. Raymond"},
+      {y:2000,cat:"Computer & Internet",sub:"Fiscal and Monetary",tags:"Financial Crisis",h:"Dot-com Bubble",type:"Event",p:"US Government"},
+      {y:2001,cat:"Politics",sub:"National Security",tags:"Terrorist Attack",h:"9/11 Attack",type:"Event",p:"US Government"},
+      {y:2001,cat:"Politics",sub:"National Security",tags:"Surveillance",h:"Patriot Act",type:"Event",p:"US Government"},
+      {y:2002,cat:"Cryptography",sub:"Privacy-Preserving Tool",tags:"Anonymous Network",h:"Releasing Tor",type:"Practice",p:"Dingledine, Mathewson, Syverson"},
+      {y:2003,cat:"Computer & Internet",sub:"Cyberspace Paradigm",tags:"Hacker Group",h:"Anonymous — Hacker Collective",type:"Practice",p:"Hacker Group"},
+      {y:2004,cat:"Cryptography",sub:"Distributed Computing",tags:"RPoW",h:"Reusable Proof of Work",type:"Theory",p:"Hal Finney"},
+      {y:2006,cat:"Cryptography",sub:"Cyberspace Paradigm",tags:"Cypherpunk",h:"Founding WikiLeaks",type:"Practice",p:"Julian Assange"},
+      {y:2006,cat:"Computer & Internet",sub:"Cyberspace Paradigm",tags:"Cypherpunk, Governance",h:"Conspiracy as Governance & State and Terrorist Conspiracies",type:"Theory",p:"Julian Assange"},
+      {y:2008,cat:"Politics",sub:"Fiscal and Monetary",tags:"Financial Crisis",h:"2008 Global Financial Crisis",type:"Event",p:"US Government"},
+      {y:2008,cat:"Cryptography",sub:"Distributed Computing",tags:"Digital Currency, Whitepaper",h:"Bitcoin: A Peer-to-Peer Electronic Cash System",type:"Theory",p:"Satoshi Nakamoto",hi:true},
+      {y:2009,cat:"Cryptography",sub:"Distributed Computing",tags:"Digital Currency, Genesis Block",h:"Developing the Bitcoin Network",type:"Practice",p:"Satoshi Nakamoto, Hal Finney",hi:true},
+    ];
+
+    /* ══════════════════════════════════════════════════════════
+       CONSTANTS
+    ══════════════════════════════════════════════════════════ */
+    const LANES = [
+      { cat:'Cryptography',        color:'#38bdf8', gid:'gx', key:'x' },
+      { cat:'Computer & Internet', color:'#4ade80', gid:'go', key:'o' },
+      { cat:'Politics',            color:'#f87171', gid:'gp', key:'p' },
+      { cat:'Economics',           color:'#fbbf24', gid:'ge', key:'e' },
+    ];
+    const CAT  = Object.fromEntries(LANES.map(l=>[l.cat, l]));
+    const GIDS = Object.fromEntries(LANES.map(l=>[l.cat, l.gid]));
+
+    const VW=1200, VH=420, L=132, R=24, T=52, B=50;
+    const PW = VW-L-R, LH = (VH-T-B)/LANES.length;
+    const Y0=1910, Y1=2010;
+    const xOf = y => L + (y-Y0)/(Y1-Y0)*PW;
+    const yOf = i => T + LH*i + LH/2;
+
+    const NS = 'http://www.w3.org/2000/svg';
+    const se = (tag,a={}) => { const e=document.createElementNS(NS,tag); Object.entries(a).forEach(([k,v])=>e.setAttribute(k,v)); return e; };
+
+    /* ══════════════════════════════════════════════════════════
+       BUILD SVG
+    ══════════════════════════════════════════════════════════ */
+    let state = { cat:'all', type:'all', sel:null };
+
+    function buildSVG(){
+      const svg = document.getElementById('ig-svg');
+      // keep <defs>
+      const defs = svg.querySelector('defs');
+      svg.innerHTML = '';
+      svg.appendChild(defs);
+
+      // ── Background lane tints
+      LANES.forEach((lane, li) => {
+        const y = T + LH*li;
+        svg.appendChild(se('rect',{x:0,y,width:VW,height:LH,
+          fill:`${lane.color}14`}));
+      });
+
+      // ── Decade grid lines
+      for(let d=1910; d<=2010; d+=10){
+        const x = xOf(d);
+        svg.appendChild(se('line',{x1:x,y1:T,x2:x,y2:VH-B,
+          stroke:'rgba(0,0,0,0.07)',
+          'stroke-width':'1',
+          'stroke-dasharray': d===1910||d===2010 ? 'none' : '2 4'
+        }));
+        if(d>1910 && d<=2010){
+          const lbl = se('text',{x,y:VH-B+16,'text-anchor':'middle',
+            'font-family':'DM Mono, monospace','font-size':'10',
+            'letter-spacing':'0.05em',fill:'rgba(0,0,0,0.28)'});
+          lbl.textContent = d;
+          svg.appendChild(lbl);
+        }
+      }
+
+      // ── Stacked density bars (top)
+      const SPARK_H = 26, SPARK_Y = 10;
+      const buckets = {};
+      LANES.forEach(lane => { buckets[lane.cat] = {}; });
+      DATA.forEach(d => {
+        const b = Math.floor(d.y/5)*5;
+        if(!buckets[d.cat]) buckets[d.cat]={};
+        buckets[d.cat][b] = (buckets[d.cat][b]||0)+1;
+      });
+      const allYears = new Set(DATA.map(d=>Math.floor(d.y/5)*5));
+      const maxTotal = Math.max(...[...allYears].map(b =>
+        LANES.reduce((s,l)=>(s+(buckets[l.cat][b]||0)),0)
+      ));
+      [...allYears].sort((a,b)=>a-b).forEach(b => {
+        const bx = xOf(b);
+        const bw = Math.max(2, PW/22 - 1);
+        let stackY = SPARK_Y + SPARK_H;
+        LANES.slice().reverse().forEach(lane => {
+          const cnt = buckets[lane.cat][b] || 0;
+          if(!cnt) return;
+          const bh = (cnt/maxTotal)*SPARK_H;
+          stackY -= bh;
+          svg.appendChild(se('rect',{
+            x:bx-bw/2, y:stackY, width:bw, height:bh,
+            fill:lane.color, rx:'1', opacity:'0.9',
+          }));
+        });
+      });
+      // density label
+      const dl = se('text',{x:L-8,y:SPARK_Y+SPARK_H/2+1,
+        'text-anchor':'end','dominant-baseline':'middle',
+        'font-family':'DM Mono, monospace','font-size':'8',
+        'letter-spacing':'0.1em',fill:'rgba(0,0,0,0.28)'});
+      dl.textContent = 'FREQ';
+      svg.appendChild(dl);
+
+      // ── Lane separators + labels
+      LANES.forEach((lane, li) => {
+        const y = T + LH*li;
+        if(li>0) svg.appendChild(se('line',{x1:0,y1:y,x2:VW,y2:y,
+          stroke:'rgba(0,0,0,0.1)','stroke-width':'1'}));
+
+        // connector thread (dashed, colored)
+        const sorted = DATA.filter(d=>d.cat===lane.cat).sort((a,b)=>a.y-b.y);
+        if(sorted.length >= 2){
+          const pts = sorted.map(d=>`${xOf(d.y)},${yOf(li)}`).join(' ');
+          svg.appendChild(se('polyline',{points:pts,fill:'none',
+            stroke:lane.color,'stroke-width':'0.8',
+            'stroke-dasharray':'2 5',opacity:'0.35'}));
+        }
+
+        // lane label
+        const lbl = se('text',{x:L-10,y:yOf(li),
+          'text-anchor':'end','dominant-baseline':'middle',
+          'font-family':'DM Mono, monospace','font-size':'9.5',
+          'letter-spacing':'0.07em',fill:lane.color,opacity:'0.8'});
+        lbl.textContent = {
+          'Cryptography':'CRYPTO',
+          'Computer & Internet':'COMPUTER',
+          'Politics':'POLITICS',
+          'Economics':'ECONOMICS',
+        }[lane.cat];
+        svg.appendChild(lbl);
+
+        // event count per lane (right side)
+        const cnt = DATA.filter(d=>d.cat===lane.cat).length;
+        const rLbl = se('text',{x:VW-R+6,y:yOf(li),
+          'text-anchor':'start','dominant-baseline':'middle',
+          'font-family':'DM Mono, monospace','font-size':'9',
+          fill:lane.color,opacity:'0.4'});
+        rLbl.textContent = cnt;
+        svg.appendChild(rLbl);
+      });
+
+      // ── Event nodes
+      DATA.forEach((d, idx) => {
+        const li = LANES.findIndex(l=>l.cat===d.cat);
+        if(li<0) return;
+        const lane = LANES[li];
+        const x = xOf(d.y), y = yOf(li);
+        const R = d.hi ? 8 : 6;
+
+        const g = se('g',{transform:`translate(${x},${y})`,'data-idx':idx});
+        g.dataset.idx = idx;
+        g.dataset.cat  = d.cat;
+        g.dataset.type = d.type;
+
+        // Bitcoin pulsing outer ring
+        if(d.hi){
+          const ring = se('circle',{r:'14',fill:'none',
+            stroke:'#f59e0b','stroke-width':'1.5',opacity:'0.5',
+            class:'btc-ring'});
+          const ring2 = se('circle',{r:'20',fill:'none',
+            stroke:'#f59e0b','stroke-width':'0.8',opacity:'0.25',
+            class:'btc-ring',style:'animation-delay:0.6s'});
+          g.appendChild(ring2);
+          g.appendChild(ring);
+        }
+
+        // transparent hit area
+        g.appendChild(se('circle',{r:'10',fill:'transparent'}));
+
+        // shape by type
+        const color = d.hi ? '#f59e0b' : lane.color;
+        const filter = d.hi ? 'url(#gbtc)' : `url(#${lane.gid})`;
+        if(d.type === 'Theory'){
+          const c = se('circle',{r:R,fill:'none',stroke:color,
+            'stroke-width':'2',filter});
+          g.appendChild(c);
+        } else if(d.type === 'Event'){
+          const s = R*1.7;
+          g.appendChild(se('rect',{x:-s/2,y:-s/2,width:s,height:s,
+            fill:color,filter,rx:'1.5'}));
+        } else if(d.type === 'Statement'){
+          const pts = `0,${-R*1.4} ${R*1.4},0 0,${R*1.4} ${-R*1.4},0`;
+          g.appendChild(se('polygon',{points:pts,fill:color,filter}));
+        } else {
+          // Practice
+          g.appendChild(se('circle',{r:R,fill:color,filter}));
+        }
+
+        g.addEventListener('mouseenter', e => onHover(e, d, idx));
+        g.addEventListener('mouseleave', onLeave);
+        g.addEventListener('click', () => onSelect(idx));
+        svg.appendChild(g);
+      });
+
+      applyFilter();
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       TOOLTIP
+    ══════════════════════════════════════════════════════════ */
+    const TT = document.getElementById('ig-tooltip');
+    function onHover(e, d){
+      const lane = CAT[d.cat];
+      document.getElementById('tt-cat').textContent    = d.cat;
+      document.getElementById('tt-cat').style.color    = lane?.color || '#fff';
+      document.getElementById('tt-year').textContent   = d.y;
+      document.getElementById('tt-title').textContent  = d.h;
+      document.getElementById('tt-people').textContent = d.p;
+      document.getElementById('tt-type').textContent   = d.type;
+      TT.classList.add('vis');
+      moveTT(e);
+    }
+    function onLeave(){ TT.classList.remove('vis'); }
+    document.addEventListener('mousemove', moveTT);
+    function moveTT(e){
+      if(!TT.classList.contains('vis')) return;
+      const pad=16, tw=290, th=100;
+      let lx = e.clientX+pad, ly = e.clientY+pad;
+      if(lx+tw > window.innerWidth)  lx = e.clientX-tw-pad;
+      if(ly+th > window.innerHeight) ly = e.clientY-th-pad;
+      TT.style.left = lx+'px';
+      TT.style.top  = ly+'px';
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       DETAIL PANEL
+    ══════════════════════════════════════════════════════════ */
+    const detailEl = document.getElementById('ig-detail');
+    function onSelect(idx){
+      if(state.sel === idx){ closeDetail(); return; }
+      state.sel = idx;
+      const d = DATA[idx];
+      const lane = CAT[d.cat];
+      const col  = d.hi ? '#f59e0b' : (lane?.color || '#fff');
+
+      document.getElementById('dd-year').textContent    = d.y;
+      document.getElementById('dd-year').style.color    = col;
+      document.getElementById('dd-title').textContent   = d.h;
+      document.getElementById('dd-people').textContent  = d.p;
+
+      const catEl = document.getElementById('dd-cat');
+      catEl.textContent   = d.cat;
+      catEl.style.color        = col;
+      catEl.style.borderColor  = col;
+
+      document.getElementById('dd-type').textContent = d.type;
+
+      const allTags = [d.sub,...(d.tags?d.tags.split(','):[])].filter(Boolean);
+      document.getElementById('dd-tags').innerHTML =
+        allTags.map(t=>`<span class="dd-tag">${t.trim()}</span>`).join('');
+
+      detailEl.style.borderLeftColor = col;
+      detailEl.classList.add('open');
+      applyFilter();
+      setTimeout(()=>detailEl.scrollIntoView({behavior:'smooth',block:'nearest'}),120);
+    }
+
+    function closeDetail(){
+      state.sel = null;
+      detailEl.classList.remove('open');
+      applyFilter();
+    }
+    document.getElementById('dd-close').addEventListener('click', closeDetail);
+
+    /* ══════════════════════════════════════════════════════════
+       FILTER + HIGHLIGHT
+    ══════════════════════════════════════════════════════════ */
+    function applyFilter(){
+      let vis = 0;
+      document.querySelectorAll('#ig-svg g[data-idx]').forEach(g => {
+        const d = DATA[+g.dataset.idx];
+        const catOk  = state.cat  === 'all' || d.cat  === state.cat;
+        const typeOk = state.type === 'all' || d.type === state.type;
+        const show   = catOk && typeOk;
+        const isSel  = state.sel === +g.dataset.idx;
+
+        if(!show){
+          g.style.opacity = '0.05';
+          g.style.filter  = '';
+          g.style.pointerEvents = 'none';
+        } else if(state.sel !== null && !isSel){
+          g.style.opacity = '0.18';
+          g.style.filter  = '';
+          g.style.pointerEvents = '';
+        } else {
+          g.style.opacity = '1';
+          g.style.filter  = '';
+          g.style.pointerEvents = '';
+          vis++;
+        }
+
+        if(isSel){
+          g.style.filter = 'drop-shadow(0 0 6px rgba(0,0,0,0.35))';
+          g.style.opacity = '1';
+        }
+      });
+      if(state.sel === null) vis = document.querySelectorAll('#ig-svg g[data-idx]').length;
+      // recount visible
+      let shown = 0;
+      document.querySelectorAll('#ig-svg g[data-idx]').forEach(g=>{
+        const d=DATA[+g.dataset.idx];
+        if((state.cat==='all'||d.cat===state.cat)&&(state.type==='all'||d.type===state.type)) shown++;
+      });
+      document.getElementById('ig-count').textContent = `${shown} entr${shown===1?'y':'ies'}`;
+
+      // sync stat buttons
+      document.querySelectorAll('.ig-stat').forEach(b=>{
+        b.classList.toggle('active', b.dataset.filterCat===state.cat);
+      });
+      document.querySelectorAll('#ig-cat-chips .ig-chip').forEach(c=>{
+        c.classList.toggle('active', c.dataset.cat===state.cat);
+      });
+    }
+
+    // stat cards
+    document.querySelectorAll('.ig-stat').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        state.cat = btn.dataset.filterCat;
+        applyFilter();
+        document.querySelectorAll('#ig-cat-chips .ig-chip').forEach(c=>{
+          c.classList.toggle('active',c.dataset.cat===state.cat);
+        });
+      });
+    });
+
+    // cat chips
+    document.querySelectorAll('#ig-cat-chips .ig-chip').forEach(chip=>{
+      chip.addEventListener('click',()=>{
+        state.cat = chip.dataset.cat;
+        applyFilter();
+        document.querySelectorAll('.ig-stat').forEach(b=>{
+          b.classList.toggle('active',b.dataset.filterCat===state.cat);
+        });
+      });
+    });
+
+    // type chips
+    document.querySelectorAll('#ig-type-chips .ig-chip').forEach(chip=>{
+      chip.addEventListener('click',()=>{
+        document.querySelectorAll('#ig-type-chips .ig-chip').forEach(c=>c.classList.remove('active'));
+        chip.classList.add('active');
+        state.type = chip.dataset.type;
+        applyFilter();
+      });
+    });
+
+    /* ══════════════════════════════════════════════════════════
+       INIT
+    ══════════════════════════════════════════════════════════ */
+    document.getElementById('cnt-all').textContent = DATA.length;
+    document.getElementById('cnt-x').textContent   = DATA.filter(d=>d.cat==='Cryptography').length;
+    document.getElementById('cnt-o').textContent   = DATA.filter(d=>d.cat==='Computer & Internet').length;
+    document.getElementById('cnt-p').textContent   = DATA.filter(d=>d.cat==='Politics').length;
+    document.getElementById('cnt-e').textContent   = DATA.filter(d=>d.cat==='Economics').length;
+
+    buildSVG();
+
+    // staggered entrance: fade in nodes left-to-right
+    const nodes = [...document.querySelectorAll('#ig-svg g[data-idx]')]
+      .sort((a,b)=> DATA[+a.dataset.idx].y - DATA[+b.dataset.idx].y);
+    nodes.forEach(g => { g.style.opacity='0'; g.style.transition='opacity 0s'; });
+    requestAnimationFrame(()=>{
+      nodes.forEach((g, i) => {
+        setTimeout(()=>{
+          g.style.transition = 'opacity 0.35s ease';
+          g.style.opacity = '1';
+        }, i * 10);
+      });
+    });
+  </script>
+</body>
+</html>
